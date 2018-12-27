@@ -1,0 +1,4 @@
+{
+    "presets": [["react-app", { "flow": true, "typescript": false }]],
+    "plugins": ["emotion"]
+}
