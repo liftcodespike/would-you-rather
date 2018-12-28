@@ -1,4 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import {Redirect} from "react-router-dom";
+import { getUsers, login } from './../actions/login';
+import SelectUserBox from './selectUserBox';
 
 const overlayStyle = {
     display: `flex`,
@@ -6,8 +10,7 @@ const overlayStyle = {
     alignItems: `center`,
     height: `100%`,
     width: `100%`,
-    backgroundColor: `black`,
-    opacity: 0.8,
+    backgroundColor: `#f2eff0`,
 
 };
 
@@ -17,12 +20,10 @@ const loginBoxStyle= {
     alignItems: `center`,
     textAlign: `center`,
     margin: `auto`,
-    height: `40vh`,
     width: `60vw`,
     minHeight: `270px`,
     backgroundColor: `white`,
     borderRadius: 10,
-    textAlign: `center`,
     padding: 10,
    
 };
@@ -35,67 +36,81 @@ const input = {
 
 }
 
-const buttonStyle = {
-    border: `thin solid black`,
-    height: `30px`,
-    margin: 5,
-}
 
 const errorField = {
     color: `red`,
 }
 
-export class Login extends React.Component{
+class Login extends React.Component{
     state = {
         nameValue: '',
-        ageValue: '',
         errors:[],
+        matchingUsers: [],
 
+    }
+    getMatchingUsers(value) {
+        const matches = []
+        for(let user in this.props.users) {
+            if (user.includes(value)) {
+                matches.push(this.props.users[user]);
+            }
+        }
+        this.setState((prevState) => {
+            return {
+                ...prevState,
+                matchingUsers:  matches,
+            };
+        })
     }
 
     handleNameChange(value){
-        const errors = []
-        if (value.length < 3) {
-            errors.push('Name is too short.')
-        }
-        if (value > 20) {
-            errors.push('Name is too long.')
-        }
+        const errors = this.checkForErrors(value, this.state.ageValue);
+
         this.setState((prevState)=>{
-            console.log(value)
             return {
                 ...prevState,
                 nameValue: value,
                 errors: errors,
             }
         })
+        this.getMatchingUsers(value);
+    }
+    checkForErrors(nameValue, ageValue){
+        const errors = [];
+
+        if (nameValue.length < 3) {
+            errors.push('Name is too short.')
+        }
+        if (nameValue > 20 ) {
+            errors.push('Name is too long.')
+        }
+        return errors
     }
 
-    handleAgeChange(value){
-        const reg = new RegExp('^\\d+$');
-        const errors = []
-        if (!reg.test(value)) {
-            errors.push('The age entered is not a valid number.')
-        }
-
-        this.setState((prevState)=>{
-            console.log(value)
-            return {
-                ...prevState,
-                ageValue: value,
-                errors: errors,
-            }
-        })
+    componentDidMount(){
+        this.props.getUsers();
+    }
+    handleLogin(user){
+        console.log(login);
+        this.props.login(user);
     }
 
     render(){
+        if(this.props.loggedInUser){
+            return (
+                    
+                    <Redirect to='/home'/>
+
+                )
+        }
         return (
+            
             <div style = {overlayStyle} >
                 <div style ={loginBoxStyle}>
-                    <h2>Login here to use this site.</h2>
+                    <h2>Login here!</h2>
                         {
                             this.state.errors.map((error)=>{
-                                return <div style={ errorField} key={error}>{error}</div>
+                                return <div style={errorField} key={error}>{error}</div>
                             })
                         }
                     <form>
@@ -106,18 +121,40 @@ export class Login extends React.Component{
                             placeholder='Enter your name here'
                             onChange={(e)=> this.handleNameChange(e.target.value)}
                         /><br></br>
-                        <input 
-                            style={input} 
-                            type='number' 
-                            value={this.state.ageValue} 
-                            placeholder='Enter your age here'
-                            onChange={(e)=> this.handleAgeChange(e.target.value)}
-                        /><br></br>
-                        <button style ={buttonStyle} >Submit</button>
                     </form>
+                    {   this.state.nameValue?
+                            this.state.matchingUsers.map((user)=> {
+                                return (
+                                    <div
+                                        key={user.name}
+                                        onClick={(e) => this.handleLogin(user)}
+                                    >
+                                        <SelectUserBox
+                                            user={user}
+                                        />
+                                    </div>
+                                )
+                            }):
+                            null
+                    }
                 </div>
             </div>
         )
     }
    
 }
+const mapStateToProps =( state )=> {
+    return {
+        users: state.users,
+        loggedInUser: state.loggedInUser,
+    }; 
+};
+
+const mapDispatchToProps = (dispatch )=> {
+    return {
+        getUsers:()=> { dispatch(getUsers(dispatch)) },
+        login: (user)=> { dispatch(login(user))},
+    }; 
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

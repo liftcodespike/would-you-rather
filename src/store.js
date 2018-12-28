@@ -1,10 +1,16 @@
-import { createStore } from 'redux';
-import { LoginReducer, loginReducer } from './reducers/login';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+
+
+import { loginReducer } from './reducers/login';
 
 export const INIT_STATE = {
-    isLoggedIn: false,
+    loggedInUser: null,
 }
 
-export const store = createStore(loginReducer);
+export const store = createStore(
+    loginReducer,
+    applyMiddleware(thunk)
+);
 
 
