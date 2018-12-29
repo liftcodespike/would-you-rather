@@ -5,3 +5,6 @@ html, body, #root {
 .navBlock{
   display: inline-block
 }
+.listSelector{
+  display: inline-block
+}

@@ -1,15 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { NavBar } from './navbar';
+import { ListSelector, listSelector } from './listSelector';
 
 class Home extends React.Component{
-    state= { 
-        clicked: 'answered'
-    }
-    func() {
-        return <div>s</div>
-    }
+
+
     render(){
         if(!this.props.user){
             return (   
@@ -18,10 +15,10 @@ class Home extends React.Component{
         }
         return (
             <div>
-            <NavBar 
-                user={this.props.user}
-            />
-            {this.func()}
+                <NavBar 
+                    user={this.props.user}
+                />
+                <ListSelector/>
             </div>
         )
     }
