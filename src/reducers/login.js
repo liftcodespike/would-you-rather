@@ -13,6 +13,11 @@ export const loginReducer = (state = INIT_STATE, action) => {
                 ...state,
                 users: action.payload,
             }
+        case loginActionTypes.LOGOUT:
+            return {
+                ...state,
+                loggedInUser: null,
+            }
         default:
             return state;
     }

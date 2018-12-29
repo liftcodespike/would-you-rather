@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
-import { Home } from './components/home'
-import  Login  from './components/login'
+import Home from './components/home';
+import Login from './components/login';
 import './App.css';
 
 class App extends Component {
   render() {
-    // if (!this.props.isLoggedIn) {
-    //   return <Login />
-    // }
+    
     return(
       <BrowserRouter>
         <Switch>

@@ -13,11 +13,15 @@ export const setUsers = (users) => {
         type: loginActionTypes.SET_USERS,
         payload: users,
     }
-}
+};
 
+export const logout = (users) => {
+    return {
+        type: loginActionTypes.LOGOUT,
+    }
+};
 
 export const getUsers = (dispatch, getState) => {
-    console.log(dispatch)
     return () => {
         _getUsers()
             .then((users)=>{
