@@ -122,6 +122,13 @@ class Login extends React.Component{
                             onChange={(e)=> this.handleNameChange(e.target.value)}
                         /><br></br>
                     </form>
+                    {this.props.users === undefined && 
+                         <img
+                            alt='loading'
+                            src='/img/loading.gif'
+                            height='60'
+                         ></img>
+                    }
                     {   this.state.nameValue?
                             this.state.matchingUsers.map((user)=> {
                                 return (

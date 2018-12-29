@@ -7,7 +7,7 @@ const mouseLeaveStyle = {
 }
 const mouseOverStyle = {
     color: `#00b7eb`,
-    fontSize: `17px`,
+    fontSize: `16px`,
 }
 
 export class NavLink  extends React.Component{
