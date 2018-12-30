@@ -3,5 +3,5 @@ import React from 'react';
 
 
 export const QuestionList = (props) => {
-    return <div>hi</div>
+    return <div>{props.questions.length}</div>
 }

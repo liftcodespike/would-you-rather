@@ -5,13 +5,15 @@ export const setQuestions= (questions) => {
         type: questionActionTypes.SET_QUESTIONS,
         payload: questions,
     }
+
 };
 
 export const getQuestions= (dispatch, getState) => {
+
     return () => {
         _getQuestions()
             .then((questions)=>{
-                dispatch(setQuestions(questions))
+                 dispatch(setQuestions(questions))
             })
     }
 }

@@ -26,6 +26,6 @@ export const getUsers = (dispatch, getState) => {
         _getUsers()
             .then((users)=>{
                 dispatch(setUsers(users))
-            })
+        })
     }
 };

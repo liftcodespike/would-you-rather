@@ -32,7 +32,9 @@ export default class SelecetUserBox extends React.Component{
             }
         })
     }
+
     render(){
+        
         return (
             <div 
                 style={this.state.hovered? mouseEnteredBoxStyle : mouseLeaveBoxStyle} 
@@ -54,3 +56,4 @@ export default class SelecetUserBox extends React.Component{
         )
     }
 }
+

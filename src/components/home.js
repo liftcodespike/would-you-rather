@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { Redirect } from "react-router-dom";
 import { NavBar } from './navbar';
-import { ListSelector, listSelector } from './listSelector';
+import ListSelector from './listSelector';
 
 class Home extends React.Component{
 

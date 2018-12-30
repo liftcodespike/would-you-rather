@@ -10,6 +10,7 @@ export const questionReducer = (state = INIT_STATE, action) => {
                 questions: action.payload,
             }
 
+
         default:
             return state;
     }

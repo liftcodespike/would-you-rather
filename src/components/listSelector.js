@@ -1,5 +1,7 @@
 import React from 'react'
-import { questionList } from './questionList';
+import { connect } from 'react-redux';
+import { QuestionList } from './questionList';
+import { getQuestions } from './../actions/questions';
 
 const wrapper = {
     margin: `auto`,
@@ -35,9 +37,10 @@ const sharedTabCode = {
     borderTopRightRadius: 8,
 }
 
-export class ListSelector extends React.Component{
+class ListSelector extends React.Component{
     state= { 
-        clicked: 'unanswered'
+        clicked: 'unanswered',
+        questions: null,
     }
     changeTab(status){
         this.setState((prevState)=>{
@@ -47,8 +50,29 @@ export class ListSelector extends React.Component{
             }
         })
     }
-    
+    getOrderedQuestions(){
+        console.log('hidsddsdsdds')
+        const questions = this.props.questions
+        return Object.keys(questions).map((key)=> {
+            return  questions[key]
+        }).sort((q1, q2) => {return q1.timestamp > q2.timestamp })
+    }
+
+    componentDidMount () {
+        this.props.getQuestions();
+    }
+
     render() {
+        if(!this.props.questions){
+            return (
+                <img
+                    style={{margin: `auto`}}
+                    alt='loading'
+                    src='/img/loading.gif'
+                    height='60'
+                ></img>
+            )
+        }
         if (this.state.clicked === 'answered') {
             return (
                 <div 
@@ -69,7 +93,13 @@ export class ListSelector extends React.Component{
                     >
                         Unanswered    
                     </div>
-
+                    <QuestionList
+                        questions ={ this.getOrderedQuestions().filter((question)=>{
+                            console.log(question)
+                            return question.optionOne.votes.length === 0 &&
+                            question.optionTwo.votes.length === 0 
+                        })}
+                    />
                 </div>
             )
         }
@@ -98,4 +128,16 @@ export class ListSelector extends React.Component{
     }
 };
 
+const mapStateToProps = ({questions}) => {
+    return {
+        questions: questions.questions,
+    }
+}
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getQuestions:()=> {dispatch(getQuestions(dispatch))},
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListSelector)
