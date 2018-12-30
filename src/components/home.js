@@ -24,10 +24,10 @@ class Home extends React.Component{
     }
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({login}) => {
 
     return {
-        user: state.loggedInUser,
+        user: login.loggedInUser,
     }
 };
 

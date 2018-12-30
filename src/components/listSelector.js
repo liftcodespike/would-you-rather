@@ -5,36 +5,39 @@ const wrapper = {
     margin: `auto`,
     height: `60vh`,
     width: `40vw`,
+    minWidth:200,
     border: `thin solid black`,
     textAlign: `center`,
     marginTop:'3vh',
     borderRadius: 8,
 
 }
+
 const tabUnselected = {
-    margin: `auto`,
-    height: `8vh`,
-    width: `18vw`,
-    border: `thin solid black`,
-    borderBottom: 'none',
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
     backgroundColor: `#303030`,
     color:'white'
 }
+
 const tabSelected = {
+    color:'black',
+    backgroundColor: `#eaeaea`,
+}
+
+const sharedTabCode = {
     margin: `auto`,
     height: `8vh`,
-    width: `18vw`,
+    minHeight: 20,
+    width: `14vw`,
+    minWidth: 90,
     border: `thin solid black`,
     borderBottom: 'none',
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    backgroundColor: `#eaeaea`,
 }
+
 export class ListSelector extends React.Component{
     state= { 
-        clicked: 'answered'
+        clicked: 'unanswered'
     }
     changeTab(status){
         this.setState((prevState)=>{
@@ -44,6 +47,7 @@ export class ListSelector extends React.Component{
             }
         })
     }
+    
     render() {
         if (this.state.clicked === 'answered') {
             return (
@@ -52,7 +56,7 @@ export class ListSelector extends React.Component{
                 >
                     <div
                         className='listSelector'
-                        style={tabSelected}
+                        style={{...tabSelected, ...sharedTabCode}}
                         
                         onClick={()=>this.changeTab('unanswered')}
                     >
@@ -60,7 +64,7 @@ export class ListSelector extends React.Component{
                     </div>
                     <div
                         className='listSelector'
-                        style={tabUnselected}
+                        style={{...tabUnselected, ...sharedTabCode}}
                         onClick={()=>this.changeTab('answered')}
                     >
                         Unanswered    
@@ -69,30 +73,29 @@ export class ListSelector extends React.Component{
                 </div>
             )
         }
+
         return (
             <div 
                 style={wrapper}
             >
                 <div
                     className='listSelector'
-                    style={tabUnselected}
+                    style={{...tabUnselected,...sharedTabCode}}
                     onClick={()=>this.changeTab('unanswered')}
                 >
                     Answered
                 </div>
                 <div
                     className='listSelector'
-                    style={tabSelected}
+                    style={{...tabSelected, ...sharedTabCode}}
                     onClick={()=>this.changeTab('answered')}
                 >
-                    
                     Unanswered
                 </div>
 
             </div>
         )  
     }
-
 };
 
 

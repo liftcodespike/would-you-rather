@@ -55,6 +55,5 @@ export default class SelecetUserBox extends React.Component{
                 />
             </div>
         )
-
     }
 }

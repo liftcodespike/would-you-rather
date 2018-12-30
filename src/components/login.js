@@ -150,10 +150,10 @@ class Login extends React.Component{
     }
    
 }
-const mapStateToProps =( state )=> {
+const mapStateToProps =( {login} )=> {
     return {
-        users: state.users,
-        loggedInUser: state.loggedInUser,
+        users: login.users,
+        loggedInUser: login.loggedInUser,
     }; 
 };
 
