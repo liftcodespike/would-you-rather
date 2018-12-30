@@ -1,7 +1,5 @@
 import React from 'react';
 
-
-
 const userImageStyle = {
     height: `20vh`
 }
@@ -20,7 +18,6 @@ const mouseLeaveBoxStyle = {
     backgroundColor: `white`,
     borderRadius: 8,
 }
-
 
 export default class SelecetUserBox extends React.Component{
     state = {
