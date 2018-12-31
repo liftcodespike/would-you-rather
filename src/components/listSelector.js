@@ -1,18 +1,14 @@
 import React from 'react'
-import { connect } from 'react-redux';
 import { QuestionList } from './questionList';
-import { getQuestions } from './../actions/questions';
 
 const wrapper = {
     margin: `auto`,
-    height: `60vh`,
     width: `40vw`,
     minWidth:200,
     border: `thin solid black`,
     textAlign: `center`,
     marginTop:'3vh',
     borderRadius: 8,
-
 }
 
 const tabUnselected = {
@@ -35,9 +31,16 @@ const sharedTabCode = {
     borderBottom: 'none',
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
+    marginBottom: 0,
+}
+const questionListWrapper = {
+    backgroundColor: `#303030`,
+    height: `150%`,
+    padding: 5,
 }
 
-class ListSelector extends React.Component{
+export default class ListSelector extends React.Component{
+    
     state= { 
         clicked: 'unanswered',
         questions: null,
@@ -51,15 +54,10 @@ class ListSelector extends React.Component{
         })
     }
     getOrderedQuestions(){
-        console.log('hidsddsdsdds')
         const questions = this.props.questions
         return Object.keys(questions).map((key)=> {
             return  questions[key]
         }).sort((q1, q2) => {return q1.timestamp > q2.timestamp })
-    }
-
-    componentDidMount () {
-        this.props.getQuestions();
     }
 
     render() {
@@ -93,13 +91,14 @@ class ListSelector extends React.Component{
                     >
                         Unanswered    
                     </div>
-                    <QuestionList
-                        questions ={ this.getOrderedQuestions().filter((question)=>{
-                            console.log(question)
-                            return question.optionOne.votes.length === 0 &&
-                            question.optionTwo.votes.length === 0 
-                        })}
-                    />
+                    <div style={questionListWrapper}>
+                        <QuestionList
+                            users={this.props.users}
+                            questions ={ this.getOrderedQuestions().filter((question)=>{
+                                return !this.props.user.answers.hasOwnProperty(question.id)
+                            })}
+                        />
+                    </div>
                 </div>
             )
         }
@@ -122,22 +121,17 @@ class ListSelector extends React.Component{
                 >
                     Unanswered
                 </div>
+                <div style={questionListWrapper}>
+                    <QuestionList
+                        users={this.props.users}
+                        questions ={ this.getOrderedQuestions().filter((question)=>{
+                            return this.props.user.answers.hasOwnProperty(question.id)
+                        })}
+                    />
+                </div>
 
             </div>
         )  
     }
 };
 
-const mapStateToProps = ({questions}) => {
-    return {
-        questions: questions.questions,
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        getQuestions:()=> {dispatch(getQuestions(dispatch))},
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ListSelector)

@@ -1,10 +1,10 @@
 import React from 'react'
-import { connect } from 'react-redux';
 import { Redirect } from "react-router-dom";
 import { NavBar } from './navbar';
 import ListSelector from './listSelector';
 
-class Home extends React.Component{
+
+export default class Home extends React.Component{
 
 
     render(){
@@ -18,17 +18,14 @@ class Home extends React.Component{
                 <NavBar 
                     user={this.props.user}
                 />
-                <ListSelector/>
+                <ListSelector
+                    users={this.props.users}
+                    user={this.props.user}
+                    questions = {this.props.questions}
+                />
             </div>
         )
     }
 };
 
-const mapStateToProps = ({login}) => {
 
-    return {
-        user: login.loggedInUser,
-    }
-};
-
-export default connect(mapStateToProps)(Home);

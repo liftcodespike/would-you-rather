@@ -8,11 +8,6 @@ const welcomeMessageStyle = {
     color: 'white',
     margin: 5,
 }
-const logoutWrapper = {
-    marginLeft: `3vw`,
-    color: `white`,
-    fontSize: `16`,
-}
 
 const navWrapper = {
     backgroundColor: `#303030`,
@@ -23,6 +18,7 @@ const navWrapper = {
 const userImgStyle = {
     height: `6vw`
 }
+
 const spacer = {
     width: `12vw`,
     display: 'inline-block',

@@ -1,8 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import {Redirect} from "react-router-dom";
-import { getUsers, login } from './../actions/login';
 import SelectUserBox from './selectUserBox';
+import { Redirect } from 'react-router-dom';
 
 const overlayStyle = {
     display: `flex`,
@@ -36,12 +34,11 @@ const input = {
 
 }
 
-
 const errorField = {
     color: `red`,
 }
 
-class Login extends React.Component{
+export default class Login extends React.Component{
     state = {
         nameValue: '',
         errors:[],
@@ -87,22 +84,18 @@ class Login extends React.Component{
         return errors
     }
 
-    componentDidMount(){
-        this.props.getUsers();
-    }
+
     handleLogin(user){
-        console.log(login);
         this.props.login(user);
     }
 
     render(){
         if(this.props.loggedInUser){
-            return (
-                    
-                    <Redirect to='/home'/>
-
-                )
+            return (   
+                <Redirect to='/home'/>
+            )
         }
+
         return (
             
             <div style = {overlayStyle} >
@@ -122,13 +115,7 @@ class Login extends React.Component{
                             onChange={(e)=> this.handleNameChange(e.target.value)}
                         /><br></br>
                     </form>
-                    {this.props.users === undefined && 
-                         <img
-                            alt='loading'
-                            src='/img/loading.gif'
-                            height='60'
-                         ></img>
-                    }
+
                     {   this.state.nameValue?
                             this.state.matchingUsers.map((user)=> {
                                 return (
@@ -150,18 +137,3 @@ class Login extends React.Component{
     }
    
 }
-const mapStateToProps =( {login} )=> {
-    return {
-        users: login.users,
-        loggedInUser: login.loggedInUser,
-    }; 
-};
-
-const mapDispatchToProps = (dispatch )=> {
-    return {
-        getUsers:()=> { dispatch(getUsers(dispatch)) },
-        login: (user)=> { dispatch(login(user))},
-    }; 
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
