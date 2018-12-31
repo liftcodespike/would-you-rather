@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { NavBar } from './navbar';
+import { saveQuestionAnswer } from './../actions/questions';
 
 const questionWrapper = {
     padding:5,
@@ -44,21 +46,47 @@ const voteStyle= {
     color: '#eb3a94'
 }
 
-export class Question extends React.Component{
+class Question extends React.Component{
     votedStr=`You voted for the above option.`
+    state =  {
+        user: this.props.user
+    }
 
     getVotedTxtOrVoteBTN (optionNum){
         if (this.checkIfAnswered()) {
-            if(this.props.user.answers[this.props.question.id]=== optionNum){
+            if(this.state.user.answers[this.props.question.id]=== optionNum){
                 return <p style={voteStyle}><sup>*</sup>{this.votedStr}</p>
             }
             return;
         }
-        return <button style={btnStyle}>Click To vote for the above option.</button>
+        return (<button 
+                    style={btnStyle}
+                    onClick={()=>this.handleUpdate(optionNum)}
+                >
+                    Click To vote for the above option.
+                </button>
+                )
+    }
+
+    handleUpdate(optionNum){
+        this.props.saveQuestionAnswer(this.state.user.id, this.props.question.id, optionNum)
+        this.setState((prevState)=>{
+            return {
+                ...prevState,
+                user: {
+                    ...prevState.user,
+                    answers: {
+                        ...prevState.user.answers,
+                        [this.props.question.id]: optionNum,
+                    }
+                }
+            }
+
+        })
     }
 
     checkIfAnswered(){
-        return this.props.user.answers.hasOwnProperty(this.props.question.id);
+        return this.state.user.answers.hasOwnProperty(this.props.question.id);
     }
 
     setProfileLayout(){
@@ -108,3 +136,12 @@ export class Question extends React.Component{
         return this.setProfileLayout();
     }
 }
+
+const mapDispatchToProps =(dispatch)=> {
+    return {
+        saveQuestionAnswer: (authedUser, qid, answer)=> { dispatch(saveQuestionAnswer(dispatch, authedUser, qid, answer)) }
+    }
+
+}
+
+export default connect(null, mapDispatchToProps)(Question)
