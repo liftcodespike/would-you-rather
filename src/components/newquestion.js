@@ -44,7 +44,8 @@ class NewQuestion extends React.Component{
     }
 
     handleFormSubmit(event) {
-        this.props.saveQuestion(this.props.user.id, this.state.optionOne, this.state.optionTwo)
+        this.props.saveQuestion(this.props.user.id, this.state.optionOne, this.state.optionTwo);
+        this.props.history.push('/home');
     }
 
     handleOptionChange(option, value){
@@ -53,7 +54,7 @@ class NewQuestion extends React.Component{
             return {
                 ...prevState,
                 [option]: value,
-            }
+            };
         })
     }
 
