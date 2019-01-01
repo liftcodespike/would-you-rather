@@ -4,6 +4,8 @@ import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import Home from './components/home';
 import Login from './components/login';
 import Question from './components/question';
+import LeaderBoard from './components/leaderboard';
+import { NoMatch } from './components/nomatch';
 import { getUsers, login } from './actions/login';
 import { getQuestions } from './actions/questions';
 import './App.css';
@@ -22,12 +24,13 @@ class App extends Component {
       return(
         <BrowserRouter>
           <Switch>
-            <Route exact path='/' render={()=>
+            <Route exact path='/' render={(props)=>
               (
                 <Login
                   users={this.props.users}
                   login={this.props.login}
                   loggedInUser={this.props.loggedInUser}
+                  history={props.history}
                 />
               )
             }/>
@@ -36,15 +39,26 @@ class App extends Component {
                 users={this.props.users}
                 question={this.props.questions[props.match.params.id]}
                 user={this.props.user}
+                history={props.history}
               />
             )}/>
-            <Route exact path='/home' render={()=>(
+            <Route exact path='/home' render={(props)=>(
               <Home 
                 users={this.props.users}
                 user={this.props.user}
                 questions={this.props.questions}
+                history={props.history}
               />
             )}/>
+            <Route exact path='/leaderboard' render={(props)=>(
+              <LeaderBoard 
+                users={this.props.users}
+                user={this.props.user}
+                questions={this.props.questions}
+                history={props.history}
+              />
+            )}/>
+            <Route component={NoMatch} />
           </Switch>
         </BrowserRouter>
       )

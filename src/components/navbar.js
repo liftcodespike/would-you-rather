@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from './navLink';
 import { logout } from './../actions/login'
+import { Redirect } from 'react-router-dom';
 
 const welcomeMessageStyle = {
     color: 'white',
@@ -40,13 +41,18 @@ const Navbar = (props) => {
             <div style={spacer}/>
                 <NavLink
                     name='New Question'
-                    clickFunc = {()=>console.log(props)}
+                    path='/new'
+                    history={props.history}
                 />
                 <NavLink
                     name='LeaderBoard'
+                    path='/leaderboard'
+                    history={props.history}
                 />
                 <NavLink
                     name='Home'
+                    path='/home'
+                    history={props.history}
                 />
                 <NavLink
                     name='Logout'

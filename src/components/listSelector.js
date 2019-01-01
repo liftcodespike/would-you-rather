@@ -5,7 +5,7 @@ const wrapper = {
     margin: `auto`,
     width: `40vw`,
     minWidth:200,
-    border: `thin solid black`,
+    border: `none`,
     textAlign: `center`,
     marginTop:'3vh',
     borderRadius: 8,
@@ -40,7 +40,7 @@ const questionListWrapper = {
 }
 
 export default class ListSelector extends React.Component{
-    
+
     state= { 
         clicked: 'unanswered',
         questions: null,

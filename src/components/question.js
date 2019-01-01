@@ -96,6 +96,7 @@ class Question extends React.Component{
             <div>
                 <NavBar 
                     user={this.props.user}
+                    history={this.props.history}
                 />
                 <div 
                     style={questionWrapper}

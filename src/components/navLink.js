@@ -23,12 +23,18 @@ export class NavLink  extends React.Component{
             }
         })
     }
-    
+    handleLogout(){
+        if(this.props.clickFunc){
+            this.props.clickFunc()
+            return
+        }
+        this.props.history.push(this.props.path)
+    }
     render(){
         return (
             <div 
                 className='navBlock'
-                onClick={this.props.clickFunc}
+                onClick={()=>this.handleLogout()}
             >
                 <div style={{padding: 20}}>
                     <span

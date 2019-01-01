@@ -6,7 +6,6 @@ import ListSelector from './listSelector';
 
 export default class Home extends React.Component{
 
-
     render(){
         if(!this.props.user){
             return (   
@@ -17,6 +16,7 @@ export default class Home extends React.Component{
             <div>
                 <NavBar 
                     user={this.props.user}
+                    history={this.props.history}
                 />
                 <ListSelector
                     users={this.props.users}
