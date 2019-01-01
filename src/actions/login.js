@@ -21,6 +21,13 @@ export const logout = (users) => {
     }
 };
 
+export const  updateLoggedinUserAnswers = (qid, answer)=> {
+    return {
+        type: loginActionTypes.UPDATE_USER_ANSWERS,
+        payload:{qid, answer}
+    }
+
+}
 export const getUsers = (dispatch, getState) => {
     return () => {
         _getUsers()

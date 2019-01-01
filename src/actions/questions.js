@@ -1,6 +1,6 @@
 import * as questionActionTypes from './../action-types/questions';
 import { _getQuestions, _saveQuestionAnswer } from './../_DATA';
-import { getUsers } from './login'
+import { getUsers, updateLoggedinUserAnswers } from './login'
 export const setQuestions= (questions) => {
     return {
         type: questionActionTypes.SET_QUESTIONS,
@@ -25,6 +25,7 @@ export const saveQuestionAnswer= (dispatch, authedUser, qid, answer, getState) =
                 console.log(questions)
                  dispatch(getQuestions(dispatch));
                  dispatch(getUsers(dispatch));
+                 dispatch(updateLoggedinUserAnswers(qid, answer));
             })
     }
 }
