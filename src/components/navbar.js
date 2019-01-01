@@ -3,7 +3,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from './navLink';
 import { logout } from './../actions/login'
-import { Redirect } from 'react-router-dom';
 
 const welcomeMessageStyle = {
     color: 'white',
