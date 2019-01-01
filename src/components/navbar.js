@@ -40,7 +40,7 @@ const Navbar = (props) => {
             <div style={spacer}/>
                 <NavLink
                     name='New Question'
-                    path='/new'
+                    path='/add'
                     history={props.history}
                 />
                 <NavLink

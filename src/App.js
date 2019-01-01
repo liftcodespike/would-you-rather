@@ -4,6 +4,7 @@ import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import Home from './components/home';
 import Login from './components/login';
 import Question from './components/question';
+import NewQuestion from './components/newquestion';
 import LeaderBoard from './components/leaderboard';
 import { NoMatch } from './components/nomatch';
 import { getUsers, login } from './actions/login';
@@ -52,6 +53,14 @@ class App extends Component {
             )}/>
             <Route exact path='/leaderboard' render={(props)=>(
               <LeaderBoard 
+                users={this.props.users}
+                user={this.props.user}
+                questions={this.props.questions}
+                history={props.history}
+              />
+            )}/>
+            <Route exact path='/add' render={(props)=>(
+              <NewQuestion 
                 users={this.props.users}
                 user={this.props.user}
                 questions={this.props.questions}

@@ -29,6 +29,17 @@ export const loginReducer = (state = INIT_STATE, action) => {
                     }
                 },
             }
+            case loginActionTypes.UPDATE_USER_QUESTIONS:
+            return {
+                ...state,
+                loggedInUser: {
+                    ...state.loggedInUser,
+                    questions:{
+                        ...state.loggedInUser.answers,
+                        [action.payload.qid] : [action.payload.answer]
+                    }
+                },
+            }
         default:
             return state;
     }
