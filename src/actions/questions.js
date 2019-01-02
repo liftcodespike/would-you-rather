@@ -24,7 +24,6 @@ export const saveQuestionAnswer= (dispatch, authedUser, qid, answer, getState) =
     return () => {
         _saveQuestionAnswer({authedUser, qid, answer})
             .then((questions)=>{
-                console.log(questions)
                  dispatch(getQuestions(dispatch));
                  dispatch(getUsers(dispatch));
                  dispatch(updateLoggedinUserAnswers(qid, answer));
