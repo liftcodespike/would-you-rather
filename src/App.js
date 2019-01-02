@@ -42,6 +42,7 @@ class App extends Component {
                 question={this.props.questions[props.match.params.id]}
                 user={this.props.user}
                 history={props.history}
+                qid={props.match.params.id}
               />
             )}/>
             <Route exact path='/home' render={(props)=>(

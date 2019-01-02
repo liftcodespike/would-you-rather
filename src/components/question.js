@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { NavBar } from './navbar';
 import { saveQuestionAnswer } from './../actions/questions';
 
+
 const questionWrapper = {
     padding:5,
     minHeight: `300px`,
@@ -89,6 +90,11 @@ class Question extends React.Component{
         return this.state.user.answers.hasOwnProperty(this.props.question.id);
     }
 
+    getPercentage(totalVotes, countForThisOption){
+        console.log(countForThisOption/totalVotes)
+        return `%${(countForThisOption/totalVotes) * 100}`
+    }
+
     setProfileLayout(){
         const questionCreator = this.props.users[this.props.question.author]
         const totalVotes = this.props.question.optionOne.votes.length + this.props.question.optionTwo.votes.length
@@ -115,13 +121,15 @@ class Question extends React.Component{
                         <p><i>{this.props.question.optionOne.text}</i></p>
                         <p>
                             <b>Voted By: </b>
-                            {this.props.question.optionOne.votes.length} of {totalVotes} 
+                            {this.props.question.optionOne.votes.length} of {totalVotes} | 
+                            <b> Percentage: </b> {this.getPercentage(totalVotes, this.props.question.optionOne.votes.length)}
                         </p>
                         {this.getVotedTxtOrVoteBTN('optionOne')}
                         <p><i>{this.props.question.optionTwo.text}</i></p>
                         <p>
-                            <b>Voted By:</b> 
-                            {this.props.question.optionTwo.votes.length} of {totalVotes} 
+                            <b>Voted By: </b> 
+                            {this.props.question.optionTwo.votes.length} of {totalVotes} | 
+                            <b> Percentage: </b> {this.getPercentage(totalVotes, this.props.question.optionTwo.votes.length)}
                         </p>
                         {this.getVotedTxtOrVoteBTN('optionTwo')}
                     </div>
@@ -131,8 +139,22 @@ class Question extends React.Component{
     }
 
     render() {
-        if(!this.props.user){
-            return <Redirect to='/' />
+        if (!this.props.user) {
+
+            return (   
+                <Redirect   to={{
+                    pathname: "/",
+                    state: { referrer: `/question/${this.props.qid}` }
+                  }}/>
+            )
+        }
+        if (!this.props.question) {
+            return (   
+                <Redirect   to={{
+                    pathname: "/nomatch",
+                    state: { referrer: `/question/${this.props.qid}` }
+                  }}/>
+            )
         }
         return this.setProfileLayout();
     }
