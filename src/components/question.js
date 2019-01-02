@@ -16,6 +16,12 @@ const questionWrapper = {
     borderRadius: 8,
     boxShadow: `5px 10px #888888`,
 }
+const seperator = {
+    borderTop: `thin solid #eb3a94`,
+    width: `100%`,
+    height: `20%`,
+    margin: 15,
+}
 const btnStyle = {
     borderRadius: 0,
     border: `none`,
@@ -47,10 +53,40 @@ const voteStyle= {
     color: '#eb3a94'
 }
 
+const progressbarWrapper =  {
+    backgroundColor: `#303030`,
+    borderRadius: `13px`,
+    padding: 3,
+  }
+  
+  const progressbarInner =(percentage)=> ({
+    backgroundColor: `#74e3a5   `,
+    width: `${percentage}%`,
+    height: `20px`,
+    borderRadius: `10px`,
+    textAlign:'center',
+    color: `white`,
+    padding: `auto`,
+  })
+
 class Question extends React.Component{
     votedStr=`You voted for the above option.`
     state =  {
         user: this.props.user
+    }
+
+    getPercentageIfAnswered(totalVotes, countForThisOption) {
+        const percentage =  this.getPercentage(totalVotes, countForThisOption);
+        console.log(percentage)
+        if (this.checkIfAnswered()){
+            return(
+                <div style={progressbarWrapper}>
+                    <div style={progressbarInner(isNaN(percentage)?0:percentage)}>{isNaN(percentage)?`loading...`:`%${percentage}`}</div>
+                </div>
+            )
+        }
+
+        return null;
     }
 
     getVotedTxtOrVoteBTN (optionNum){
@@ -92,7 +128,7 @@ class Question extends React.Component{
 
     getPercentage(totalVotes, countForThisOption){
         console.log(countForThisOption/totalVotes)
-        return `%${(countForThisOption/totalVotes) * 100}`
+        return ((countForThisOption/totalVotes) * 100).toFixed(2)
     }
 
     setProfileLayout(){
@@ -116,21 +152,24 @@ class Question extends React.Component{
                     </div>
                     <div style={resultsWrapper} >
                         <div style={cardHeader}> 
-                            <h1>Results</h1>
+                        <h2>Would You Rather...</h2>
                         </div>
-                        <p><i>{this.props.question.optionOne.text}</i></p>
+                        <p>{this.props.question.optionOne.text}</p>
                         <p>
                             <b>Voted By: </b>
-                            {this.props.question.optionOne.votes.length} of {totalVotes} | 
-                            <b> Percentage: </b> {this.getPercentage(totalVotes, this.props.question.optionOne.votes.length)}
+                            {this.props.question.optionOne.votes.length} of {totalVotes}
                         </p>
+                            {this.getPercentageIfAnswered(totalVotes,this.props.question.optionOne.votes.length)}
+                        
                         {this.getVotedTxtOrVoteBTN('optionOne')}
-                        <p><i>{this.props.question.optionTwo.text}</i></p>
+                        <div style={seperator}></div>
+                        <p>{this.props.question.optionTwo.text}</p>
                         <p>
                             <b>Voted By: </b> 
-                            {this.props.question.optionTwo.votes.length} of {totalVotes} | 
-                            <b> Percentage: </b> {this.getPercentage(totalVotes, this.props.question.optionTwo.votes.length)}
+                            {this.props.question.optionTwo.votes.length} of {totalVotes}
                         </p>
+                            {this.getPercentageIfAnswered(totalVotes, this.props.question.optionTwo.votes.length)}
+                        
                         {this.getVotedTxtOrVoteBTN('optionTwo')}
                     </div>
                 </div>
@@ -155,6 +194,7 @@ class Question extends React.Component{
                     state: { referrer: `/question/${this.props.qid}` }
                   }}/>
             )
+
         }
         return this.setProfileLayout();
     }
