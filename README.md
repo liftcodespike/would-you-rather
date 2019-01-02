@@ -1,14 +1,14 @@
-## Would You Rather App
-# Project Purpose:
+# Would You Rather App
+## Project Purpose:
 This Website was built as a project for Udacity's React Nanodegree Program. The purpose of the project is to demonstrate understanding of how Redux works in a React-based web app.
 
-# Installed Needs:
+## Installed Needs:
 - Node.js 
 - Create-React-App.
 - A Browser (I prefer Chrome!)
 
 
-# Start Up: 
+## Start Up: 
 - Run git clone 
 - npm install
 - npm start

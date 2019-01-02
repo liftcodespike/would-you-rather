@@ -57,7 +57,7 @@ export default class ListSelector extends React.Component{
         const questions = this.props.questions
         return Object.keys(questions).map((key)=> {
             return  questions[key]
-        }).sort((q1, q2) => {return q1.timestamp > q2.timestamp })
+        }).sort((q1, q2) => {return q2.timestamp - q1.timestamp })
     }
 
     render() {
@@ -71,7 +71,7 @@ export default class ListSelector extends React.Component{
                 ></img>
             )
         }
-        if (this.state.clicked === 'answered') {
+        if (this.state.clicked === 'unanswered') {
             return (
                 <div 
                     style={wrapper}
@@ -80,14 +80,14 @@ export default class ListSelector extends React.Component{
                         className='listSelector'
                         style={{...tabSelected, ...sharedTabCode}}
                         
-                        onClick={()=>this.changeTab('unanswered')}
+                        onClick={()=>this.changeTab('answered')}
                     >
                         Answered
                     </div>
                     <div
                         className='listSelector'
                         style={{...tabUnselected, ...sharedTabCode}}
-                        onClick={()=>this.changeTab('answered')}
+                        onClick={()=>this.changeTab('unanswered')}
                     >
                         Unanswered    
                     </div>
@@ -110,14 +110,14 @@ export default class ListSelector extends React.Component{
                 <div
                     className='listSelector'
                     style={{...tabUnselected,...sharedTabCode}}
-                    onClick={()=>this.changeTab('unanswered')}
+                    onClick={()=>this.changeTab('answered')}
                 >
                     Answered
                 </div>
                 <div
                     className='listSelector'
                     style={{...tabSelected, ...sharedTabCode}}
-                    onClick={()=>this.changeTab('answered')}
+                    onClick={()=>this.changeTab('unanswered')}
                 >
                     Unanswered
                 </div>

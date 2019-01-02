@@ -9,7 +9,10 @@ export default class Home extends React.Component{
     render(){
         if(!this.props.user){
             return (   
-                <Redirect to='/'/>
+                <Redirect   to={{
+                    pathname: "/",
+                    state: { referrer: '/home' }
+                  }}/>
             )
         }
         return (

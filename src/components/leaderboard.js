@@ -51,7 +51,10 @@ export default class LeaderBoard extends React.Component{
     render(){
         if(!this.props.user){
             return (   
-                <Redirect to='/'/>
+                <Redirect   to={{
+                    pathname: "/",
+                    state: { referrer: '/leaderboard' }
+                  }}/>
             )
         }
         return (

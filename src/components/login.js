@@ -91,6 +91,11 @@ export default class Login extends React.Component{
 
     render(){
         if(this.props.loggedInUser){
+            if(this.props.location.state.referrer){
+                return (   
+                    <Redirect to={this.props.location.state.referrer}/>
+                )
+            }
             return (   
                 <Redirect to='/home'/>
             )

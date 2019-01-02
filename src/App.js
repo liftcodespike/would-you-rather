@@ -32,6 +32,7 @@ class App extends Component {
                   login={this.props.login}
                   loggedInUser={this.props.loggedInUser}
                   history={props.history}
+                  location={props.location}
                 />
               )
             }/>

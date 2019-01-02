@@ -61,7 +61,10 @@ class NewQuestion extends React.Component{
     render(){
         if(!this.props.user){
             return (   
-                <Redirect to='/home'/>
+                <Redirect   to={{
+                    pathname: "/",
+                    state: { referrer: '/add' }
+                  }}/>
             )
         }
 
